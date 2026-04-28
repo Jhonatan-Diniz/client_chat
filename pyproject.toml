@@ -1,0 +1,26 @@
+[project]
+name = "comunicacao-redes"
+version = "0.1.0"
+description = "aaaaaaaaaaaaaaaaaaaaa"
+authors = [
+    {name = "Yaskara Santangelo"},
+	{name = "Jhonatan V. Diniz"}
+]
+requires-python = ">=3.13"
+dependencies = [
+    "customtkinter (>=5.1.0)",
+    "setuptools (>=82.0.1,<83.0.0)",
+    "pillow (>=12.2.0,<13.0.0)"
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+packages = [{include = "comunicacao_redes", from = "src"}]
+
+[dependency-groups]
+dev = [
+    "pynvim (>=0.6.0,<0.7.0)"
+]
