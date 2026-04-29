@@ -76,7 +76,7 @@ class LoginWindow(ctk.CTk):
             daemon = True
         ).start()
 
-    def _auth_thread(self, username: str, password: str, register: bool):
+    def _auth_thread(self, username: str, password: str):
        # try:
        #     ws = WebsocketClient(
        #         host = config.server_host,
@@ -99,13 +99,18 @@ class LoginWindow(ctk.CTk):
        # 
        # except ConnectionError:
        #     self.after(0, self.on_auth_failure("Não foi possível conectar ao servidor"))
-       ws = WebsocketClient(config.server_host, config.server_port, self._msg_queue)
-       self._on_auth_sucess(ws, username, "aaaaaaaa")
-       ...
+       ws = WebsocketClient(config.server_host, config.server_port)
+       ws.connect()
+       id : int | None = ws.login(username, password)
+       if id is None : 
+           self._on_auth_failure("Usuário não encontrado")
+           return
 
-    def _on_auth_sucess(self, ws: WebsocketClient, username: str, token: str):
+       self._on_auth_sucess(ws, username, id)
+
+    def _on_auth_sucess(self, ws: WebsocketClient, username: str, token: int):
         print("AUTENTICACAO E TAL VOCE JA SABE")
-        self._section.set(username=username, token=token)
+        self._section.set(username=username, token=str(token))
         self._set_loading(False)
 
         chat : ctk.CTkToplevel = ChatWindow(
